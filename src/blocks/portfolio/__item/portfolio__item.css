@@ -1,0 +1,10 @@
+.portfolio__item{
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0 0;
+  border-bottom: 1px solid #424242;
+}
+
+.portfolio__item:nth-child(4) {
+  border-bottom: none;
+}

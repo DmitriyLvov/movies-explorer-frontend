@@ -1,0 +1,9 @@
+.about__timing-element_highlighted{
+  color: #000;
+  background-color: #3DDC84;
+  width: 228px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

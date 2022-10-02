@@ -1,0 +1,7 @@
+.about__timing{
+  min-height: 36px;
+  background-color: #303030;
+  display: flex;
+  align-items: center;
+  margin-top: 110px;
+}
