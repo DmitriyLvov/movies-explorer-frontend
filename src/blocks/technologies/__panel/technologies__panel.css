@@ -1,7 +1,0 @@
-.technologies__panel{
-  display: flex;
-  max-width: 690px;
-  gap: 10px;
-  list-style-type: none;
-  margin: 100px auto 0;
-}

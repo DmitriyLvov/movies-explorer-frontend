@@ -1,0 +1,91 @@
+.technologies{
+  background-color: #272727;
+  padding: 100px 70px 0;
+  min-height: 525px;
+}
+
+.technologies__description{
+  font: 400 14px/20px 'Inter';
+  text-align: center;
+  color: #fff;
+  margin: 26px auto 0;
+  max-width: 460px;
+  letter-spacing: -0.04em;
+}
+
+.technologies__item{
+  color: #fff;
+  font: 400 14px/1.21 'Inter';
+  letter-spacing: -0.04em;
+  width: 90px;
+  height: 60px;
+  border-radius: 10px;
+  background-color: #303030;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.technologies__panel{
+  display: flex;
+  max-width: 690px;
+  list-style-type: none;
+  margin: 100px auto 0;
+  padding: 0;
+  justify-content: space-around;
+  gap:10px;
+}
+
+.technologies__title{
+  font: 400 50px/58px 'Inter';
+  color: #fff;
+  margin: 90px 0 0;
+  text-align: center;
+  letter-spacing: -0.04em;
+}
+
+
+@media screen and (max-width:769px) {
+  .technologies {
+    padding: 87px 50px 0;
+    min-height: 480px;
+  }
+  .technologies__title{
+    margin: 80px 0 0;
+  }
+  .technologies__description{
+    font: 400 12px/18px 'Inter';
+    margin: 21px auto 0;
+  }
+  .technologies__panel{
+    margin: 83px auto 0;
+    flex-wrap: wrap;
+    justify-content: left;
+  }
+  .technologies__item{
+    width: 84px;
+    font: 400 12px/1.21 'Inter';
+    height: 57px;
+  }
+}
+
+@media screen and (max-width:570px) {
+  .technologies {
+    background-color: rgba(0, 0, 0, 0);
+    padding: 70px 18px 0;
+    min-height: 581px;
+  }
+  .technologies__panel{
+    width: 178px;
+  }
+  .technologies__title{
+    margin: 60px 0 0;
+    font: 400 30px/1.21 'Inter';
+  }
+  .technologies__description{
+    font: 400 11px/16px 'Inter';
+  }
+  .technologies__panel{
+    margin: 50px auto 0;
+  }
+}

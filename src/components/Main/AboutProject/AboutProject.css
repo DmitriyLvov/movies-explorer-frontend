@@ -1,0 +1,175 @@
+.about-project{
+  min-height: 498px;
+  padding: 110px 70px 0;
+}
+
+.about-project__content{
+  display: grid;
+  grid-template-columns: calc( (100vw - 180px ) / 2 ) 40px calc( (100vw - 180px ) / 2 );
+  grid-template-rows: fit-content();
+  grid-template-areas: "leftTitle . rightTitle" "leftDescription . rightDescription" "leftTiming middleTiming rightTiming" "leftTimingDescription . rightTimingDescription";
+}
+
+.about-project__description{
+  margin: 26px 0 0;
+  font: 400 14px/20px 'Inter';
+  color: #fff;
+  max-width: 550px;
+  min-height: 150px;
+}
+
+
+.about-project__timing{
+  min-height: 36px;
+  background-color: #303030;
+  display: flex;
+  align-items: center;
+  border: none;
+}
+
+.about-project__middle-timing{
+  grid-area: middleTiming;
+  background-color: #303030;
+}
+
+.about-project__title_left{
+  grid-area: leftTitle;
+}
+.about-project__title_right{
+  grid-area: rightTitle;
+}
+
+.about-project__description_left{
+  grid-area: leftDescription;
+}
+
+.about-project__description_right{
+  grid-area: rightDescription;
+}
+
+
+.about-project__timing_left{
+  grid-area: leftTiming;
+}
+
+.about-project__timing_right{
+  grid-area: rightTiming;
+}
+
+.about-project__timing-description_left{
+  grid-area: leftTimingDescription;
+}
+
+.about-project__timing-description_right{
+  grid-area: rightTimingDescription;
+}
+
+.about-project__timing-description{
+  color: #8b8b8b;
+  margin: 14px 0 0;
+  width: 200px;
+  font: 500 14px/17px 'Inter';
+  text-align: center;
+}
+
+.about-project__timing-description_highlighted{
+  width: 228px;
+}
+
+.about-project__timing-element{
+  font: 400 14px/1.21 'Inter';
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  text-align: center;
+}
+
+.about-project__timing-element_highlighted{
+  color: #000;
+  background-color: #3DDC84;
+  width: 228px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-project__title{
+  margin: 70px 0 0;
+  font: 400 20px/1.21 'Inter';
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+
+@media screen and (max-width:769px) {
+  .about-project{
+    min-height: 498px;
+    padding: 90px 50px 0;
+  }
+  .about-project__content{
+    grid-template-columns: calc( (100vw - 130px ) / 2 ) 30px calc( (100vw - 130px ) / 2 );
+  }
+  .about-project__description{
+    font: 400 12px/18px 'Inter';
+    margin-top: 20px;
+    min-height: 147px;
+  }
+  .about-project__timing-element{
+    width: 110px;
+  }
+  .about-project__timing-element_highlighted{
+    width: 140px;
+  }
+  .about-project__timing-description{
+    text-align: left;
+    margin: 14px 0 0 22px;
+  }
+  .about-project__timing-description_highlighted{
+    margin: 14px 0 0 38px;
+  }
+}
+
+@media screen and (max-width:570px) {
+  
+  .about-project__content{
+    grid-template-columns: 100px calc(100vw - 136px);
+    grid-template-areas: "leftTitle leftTitle" 
+    "leftDescription leftDescription" 
+    "rightTitle rightTitle" 
+    "rightDescription rightDescription"
+     "leftTiming rightTiming" 
+     "leftTimingDescription rightTimingDescription";
+  }
+  .about-project{
+    padding: 70px 18px 0;
+    min-height: 571px;
+  }
+  .about-project__title{
+    margin: 60px 0 0;
+    font: 400 18px/1.21 'Inter';
+  }
+  .about-project__description{
+    font: 400 11px/16px 'Inter';
+    margin-top: 14px;
+    min-height: 0px;
+  }
+  .about-project__timing{
+    margin: 60px 0 0;
+    justify-content: center;
+  }
+  .about-project__timing-element{
+    font: 400 11px/1.21 'Inter';
+  }
+  .about-project__timing-description{
+    font: 400 11px/1.21px 'Inter';
+    width: calc(100% - 44px);
+    text-align: center;
+    height: 13px;
+  }
+  .about-project__timing-description_highlighted{
+    margin: 14px 0 0 22px;
+  }
+
+}
+
