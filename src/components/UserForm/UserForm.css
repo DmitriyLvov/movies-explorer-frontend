@@ -7,6 +7,12 @@
   }
 }
 
+.user-form__container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .user-form__title{
   font: 500 24px/1.21 'Inter';
   color: #fff;
@@ -68,13 +74,14 @@
   }
   .user-form__submit-button{
     font: 400 12px/1.21 'Inter';
-    margin: 114px 0 0;
+    margin: 114px auto 0;
+    max-width: 260px;
   }
   .user-form__submit-button_profile{
-    margin-top: 184px;
+    margin-top: 124px;
   }
   .user-form{
-    width: calc(100vw - 60px);
+    width: 100%;
     margin: 0 auto;
   }
   .user-form__title{
@@ -82,7 +89,7 @@
     text-align: center;
   }
   .user-form__title_profile{
-    margin: 40px 0 12px;
+    margin: 0px 0 12px;
   }
 }
 

@@ -8,7 +8,7 @@ function Profile() {
   return (
     <div className="profile">
       <Header type="movies" />
-      <section className="profile__section">
+      <main className="profile__section">
         <UserForm
           title="Привет, Виталий!"
           mode="profile"
@@ -32,10 +32,12 @@ function Profile() {
             required={true}
           />
         </UserForm>
+      </main>
+      <footer>
         <Link to="/sign-out" className="profile__link">
           Выйти из аккаунта
         </Link>
-      </section>
+      </footer>
     </div>
   );
 }

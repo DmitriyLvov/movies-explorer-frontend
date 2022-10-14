@@ -5,16 +5,20 @@ import './Page404.css';
 function Page404() {
   const navigate = useNavigate();
   return (
-    <section className="page404">
-      <h2 className="page404__title">404</h2>
-      <p className="page404__text">Страница не найдена</p>
-      <Link
-        className="page404__text page404__text_type_link"
-        onClick={() => navigate(-1)}
-      >
-        Назад
-      </Link>
-    </section>
+    <>
+      <header />
+      <main className="page404">
+        <h2 className="page404__title">404</h2>
+        <p className="page404__text">Страница не найдена</p>
+        <Link
+          className="page404__text page404__text_type_link"
+          onClick={() => navigate(-1)}
+        >
+          Назад
+        </Link>
+      </main>
+      <footer />
+    </>
   );
 }
 

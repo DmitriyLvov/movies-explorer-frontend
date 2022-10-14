@@ -31,6 +31,12 @@
   animation: link-hovered 0.2s linear forwards;
 }
 
+@media screen and (max-width:769px) {
+  .login{
+    padding-top: 230px;
+  }
+}
+
 @media screen and (max-width:570px) {
   .login{
     width: 100%;
