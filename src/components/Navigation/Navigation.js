@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import accountIcon from '../../images/icon__account.svg';
 import NavigationPopup from '../NavigationPopup/NavigationPopup';
 import './Navigation.css';
 
 function Navigation({ type }) {
-  const location = useLocation();
-  console.log(location);
+  // const location = useLocation();
+  // console.log(location);
 
   const [navPopupVisible, setNavPopupVisible] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);

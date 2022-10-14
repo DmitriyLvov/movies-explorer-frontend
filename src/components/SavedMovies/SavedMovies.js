@@ -9,9 +9,11 @@ function SavedMovies() {
   return (
     <div className="saved-movies">
       <Header type="movies" />
-      <SearchForm />
-      {/* <Preloader /> */}
-      <MoviesCardList qty="2" type="saved-movies" />
+      <main>
+        <SearchForm />
+        {/* <Preloader /> */}
+        <MoviesCardList qty="2" type="saved-movies" />
+      </main>
       <Footer />
     </div>
   );

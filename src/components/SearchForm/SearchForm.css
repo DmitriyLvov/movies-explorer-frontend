@@ -21,6 +21,7 @@
   height: 72px;
   width: 100%;
   background-color: #2f2f2f;
+  border: 1px solid rgba(0, 0, 0, 0);
 }
 
 .search-form__search-field{
@@ -48,6 +49,11 @@
 .search-form__input:focus{
   border: none;
   outline:none;
+}
+
+.search-form__input-wrapper_actived{
+  border: 1px solid white;
+  
 }
 
 .search-from__button{
@@ -91,6 +97,7 @@
   }
   .search-form__search-field{
     flex-direction: column;
+    background-color: rgba(1,1,1,0);
   }
   .search-form__input{
     width: calc(100% - 100px);

@@ -1,7 +1,14 @@
-import React from 'react';
 import './InputWithLabel.css';
 
-function InputWithLabel({ title, error, type, name, view, value }) {
+function InputWithLabel({
+  title,
+  error,
+  type,
+  name,
+  view,
+  value,
+  required = false,
+}) {
   const getMainClass = () => {
     if (view === 'profile') {
       return 'input-with-label input-with-label_profile';
@@ -31,12 +38,22 @@ function InputWithLabel({ title, error, type, name, view, value }) {
       <label htmlFor={name} className={getLabelClass()}>
         {title}
       </label>
-      <input
-        type={type}
-        name={name}
-        className={getInputClass()}
-        defaultValue={value}
-      ></input>
+      {required ? (
+        <input
+          type={type}
+          name={name}
+          className={getInputClass()}
+          defaultValue={value}
+          required
+        />
+      ) : (
+        <input
+          type={type}
+          name={name}
+          className={getInputClass()}
+          defaultValue={value}
+        />
+      )}
       <span className="input-with-label__error">{error}</span>
     </div>
   );

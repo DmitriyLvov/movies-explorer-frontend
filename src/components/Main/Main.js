@@ -12,12 +12,14 @@ function Main() {
   return (
     <>
       <Header type="main" />
-      <Promo />
-      <NavTab />
+      <main>
+        <Promo />
+        <NavTab />
 
-      <AboutProject />
-      <Techs />
-      <AboutMe />
+        <AboutProject />
+        <Techs />
+        <AboutMe />
+      </main>
       <div className="main">
         <Footer />
       </div>

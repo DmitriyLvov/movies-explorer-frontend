@@ -21,6 +21,7 @@ function Profile() {
             view="profile"
             name="name"
             value="Виталий"
+            required={true}
           />
           <InputWithLabel
             type="text"
@@ -28,9 +29,12 @@ function Profile() {
             view="profile"
             name="email"
             value="pochta@yandex.ru"
+            required={true}
           />
         </UserForm>
-        <Link to="/sign-out" className='profile__link'>Выйти из аккаунта</Link>
+        <Link to="/sign-out" className="profile__link">
+          Выйти из аккаунта
+        </Link>
       </section>
     </div>
   );

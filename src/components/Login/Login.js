@@ -8,11 +8,12 @@ function Login() {
   return (
     <section className="login">
       <UserForm title="Рады видеть!" buttonText="Войти" mode="auth">
-        <InputWithLabel type="text" title="E-mail" />
+        <InputWithLabel type="text" title="E-mail" required={true} />
         <InputWithLabel
           type="password"
           title="Пароль"
           error="Что-то пошло не так..."
+          required={true}
         />
       </UserForm>
       <p className="login__text">

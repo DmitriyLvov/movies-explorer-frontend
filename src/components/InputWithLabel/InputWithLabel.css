@@ -1,5 +1,6 @@
 .input-with-label{
   position: relative;
+  border: 1px solid rgba(0, 0, 0, 0);
 }
 
 .input-with-label_profile{
@@ -41,7 +42,7 @@
 }
 
 .input-with-label__input:focus{
-  border: none;
+  border: 1px solid white;
   outline: none;
 }
 

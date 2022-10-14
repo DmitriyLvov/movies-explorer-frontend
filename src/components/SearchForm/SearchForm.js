@@ -6,6 +6,7 @@ import './SearchForm.css';
 
 function SearchForm() {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [inputClass, setInputClass] = useState('search-form__input-wrapper');
 
   useEffect(() => {
     window.addEventListener('resize', changeWindowSize);
@@ -20,8 +21,8 @@ function SearchForm() {
 
   return (
     <section className="search-form">
-      <div className="search-form__search-field">
-        <div className="search-form__input-wrapper">
+      <form className="search-form__search-field">
+        <div className={inputClass}>
           {screenWidth > 570 && (
             <img
               className="search-form__search-icon"
@@ -33,8 +34,15 @@ function SearchForm() {
             type="text"
             placeholder="Фильм"
             className="search-form__input"
+            onFocus={() =>
+              setInputClass(
+                'search-form__input-wrapper search-form__input-wrapper_actived',
+              )
+            }
+            onBlur={() => setInputClass('search-form__input-wrapper')}
+            required
           />
-          <button type="button" className="search-from__button">
+          <button type="submit" className="search-from__button">
             <img
               src={forwardIcon}
               alt="search button"
@@ -43,7 +51,7 @@ function SearchForm() {
           </button>
         </div>
         <FilterCheckobox />
-      </div>
+      </form>
     </section>
   );
 }
