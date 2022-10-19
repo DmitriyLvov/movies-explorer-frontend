@@ -1,31 +1,24 @@
 import { useState, useEffect } from 'react';
-import useMovieManipulations from '../../utils/useMovieManipulations';
+import useMovieManipulations from '../../hooks/useMovieManipulations';
 import './FilterCheckbox.css';
 
-function FilterCheckobox() {
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+function FilterCheckobox({ screenWidth, searchMovieHandler }) {
   const [checked, setChecked] = useState(false);
 
-  const { getDataToLocalStore } = useMovieManipulations();
+  const { getSearchDataFromLocalStore } = useMovieManipulations();
 
   // Получение из LocalStore состояния checkbox при монтировании
   useEffect(() => {
-    const localData = getDataToLocalStore();
+    const localData = getSearchDataFromLocalStore();
     if (localData) {
       setChecked(localData.isShortMovies);
     }
   }, []);
 
-  useEffect(() => {
-    window.addEventListener('resize', changeWindowSize);
-    return () => {
-      window.removeEventListener('resize', changeWindowSize);
-    };
-  }, []);
-
-  function changeWindowSize() {
-    setScreenWidth(window.innerWidth);
-  }
+  const changeStateHandle = (e) => {
+    setChecked(!checked);
+    setTimeout(() => searchMovieHandler(e), 0);
+  };
 
   return (
     <div className="filter-checkbox">
@@ -36,7 +29,7 @@ function FilterCheckobox() {
           type="checkbox"
           id="switch"
           name="isShortMovies"
-          onChange={() => setChecked(!checked)}
+          onChange={changeStateHandle}
           checked={checked}
         />
       }

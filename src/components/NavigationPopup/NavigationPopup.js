@@ -3,7 +3,7 @@ import accountIcon from '../../images/icon__account.svg';
 import './NavigationPopup.css';
 
 function NavigationPopup({ closeNavPopupHandler }) {
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   return (
     <section className="navigation-popup">
@@ -16,19 +16,39 @@ function NavigationPopup({ closeNavPopupHandler }) {
           <ul className="navigation-popup__pages">
             <Link to="/" className="navigation-popup__page">
               <li className="navigation-popup__page">
-                <span className="navigation-popup__text">Главная</span>
+                <span
+                  className={`${
+                    pathname === '/'
+                      ? 'navigation-popup__text navigation-popup__text_actived'
+                      : 'navigation-popup__text'
+                  }`}
+                >
+                  Главная
+                </span>
               </li>
             </Link>
             <Link to="/movies" className="navigation-popup__page">
               <li className="navigation-popup__page">
-                <span className="navigation-popup__text navigation-popup__text_actived">
+                <span
+                  className={`${
+                    pathname === '/movies'
+                      ? 'navigation-popup__text navigation-popup__text_actived'
+                      : 'navigation-popup__text'
+                  }`}
+                >
                   Фильмы
                 </span>
               </li>
             </Link>
             <Link to="/saved-movies" className="navigation-popup__page">
               <li className="navigation-popup__page">
-                <span className="navigation-popup__text">
+                <span
+                  className={`${
+                    pathname === '/saved-movies'
+                      ? 'navigation-popup__text navigation-popup__text_actived'
+                      : 'navigation-popup__text'
+                  }`}
+                >
                   Сохраненные фильмы
                 </span>
               </li>

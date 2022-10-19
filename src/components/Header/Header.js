@@ -2,8 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 import './Header.css';
 
-function Header({ type }) {
-  
+function Header({ type, screenWidth }) {
   const navigate = useNavigate();
 
   const getHeaderStyle = (type) => {
@@ -18,7 +17,7 @@ function Header({ type }) {
   return (
     <header className={getHeaderStyle(type)}>
       <div className="top-logo" onClick={() => navigate('/')} />
-      <Navigation type={type} />
+      <Navigation screenWidth={screenWidth} />
     </header>
   );
 }

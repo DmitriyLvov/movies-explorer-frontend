@@ -2,16 +2,18 @@ import { useEffect, useState } from 'react';
 import FilterCheckobox from '../FilterCheckbox/FilterCheckbox';
 import searchIcon from '../../images/icon-search.svg';
 import forwardIcon from '../../images/icon-forward.svg';
-import useMovieManipulations from '../../utils/useMovieManipulations';
+import useMovieManipulations from '../../hooks/useMovieManipulations';
 import './SearchForm.css';
 
-function SearchForm({ searchMovieHandler, screenWidth }) {
+function SearchForm({ searchMovieHandler, screenWidth, type }) {
   const [inputText, setInputText] = useState('');
-  const { getDataToLocalStore } = useMovieManipulations();
+  const { getSearchDataFromLocalStore } = useMovieManipulations();
   useEffect(() => {
-    const localData = getDataToLocalStore();
-    if (localData) {
-      setInputText(localData.searchText);
+    if (type === 'movies') {
+      const localData = getSearchDataFromLocalStore();
+      if (localData) {
+        setInputText(localData.searchText);
+      }
     }
   }, []);
 
@@ -50,7 +52,10 @@ function SearchForm({ searchMovieHandler, screenWidth }) {
             />
           </button>
         </div>
-        <FilterCheckobox />
+        <FilterCheckobox
+          screenWidth={screenWidth}
+          searchMovieHandler={searchMovieHandler}
+        />
       </form>
     </section>
   );

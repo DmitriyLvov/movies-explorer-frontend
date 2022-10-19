@@ -61,7 +61,13 @@
   margin: 0;
   position: absolute;
   left: 0;
-  top: 79px;
+  top: 70px;
+}
+
+.input-with-label__error_type_profile{
+  top: 50px;
+  width: 100%;
+  text-align: center;
 }
 
 @media screen and (max-width:570px) {

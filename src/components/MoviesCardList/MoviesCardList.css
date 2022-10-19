@@ -34,6 +34,12 @@
   animation: button-hovered 0.2s linear forwards;
 }
 
+.movies-card-list__error{
+  color: #fff;
+  font: 400 13px/18px 'Inter';
+  text-align: center;
+}
+
 @media screen and (max-width:768px) {
   .movies-card-list {
     margin: 70px 0 0;
