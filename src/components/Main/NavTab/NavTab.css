@@ -1,0 +1,46 @@
+@keyframes link-hovered {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+.nav-tab{
+  min-height: 66px;
+  background-color: #272727;
+  margin: 0;
+}
+
+.nav-tab__link{
+  font: 500 13px/16px 'Inter';
+  list-style: none;
+  text-decoration: underline;
+  color: white;
+  list-style-type: none;
+}
+
+.nav-tab__link:hover {
+  cursor: pointer;
+  animation: button-hovered 0.2s linear forwards;
+}
+
+.nav-tab__panel{
+  margin: 0 auto;
+  padding: 24px 0;
+  width: 276px;
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+
+@media screen and (max-width:570px) {
+  .nav-tab__panel{
+    width: 214px;
+    gap: 24px;
+  }
+  .nav-tab__link{
+    font: 500 11px/16px 'Inter';
+  }
+}

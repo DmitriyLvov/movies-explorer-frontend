@@ -1,0 +1,32 @@
+.header{
+  background-color: #073042;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 74px;
+  padding: 0 70px;
+}
+
+.header_type_movies{
+  background-color: rgba(0, 0, 0, 0);
+  padding: 0;
+}
+
+@media screen and (max-width:769px) {
+  .header{
+    padding: 0 30px;
+  }
+  .header_type_movies{
+    background-color: rgba(0, 0, 0, 0);
+    padding: 0;
+  }
+}
+
+@media screen and (max-width:570px) {
+  .header{
+    padding: 0 14px;
+  }
+  .header_type_movies{
+    padding: 0 4px;
+  }
+}

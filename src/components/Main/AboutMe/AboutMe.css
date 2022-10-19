@@ -1,0 +1,94 @@
+.about-me{
+  padding: 110px 70px 0;
+}
+
+.about-me__content{
+  display: flex;
+  gap:49px;
+  justify-content: space-between;
+}
+
+.about-me__description{
+  max-width: 600px;
+  color: #fff;
+  font: 400 14px/22px 'Inter';
+  margin: 26px 0 0;
+}
+
+.about-me__link{
+  color: #fff;
+  text-decoration: none;
+  font: 500 14px/1.21 'Inter';
+  margin: 55px 0 0;
+  display: inline-block;
+}
+
+.about-me__photo{
+  width: 270px;
+  height: 327px;
+  border-radius: 10px;
+  margin: 66px 0 0;
+}
+
+.about-me__summary{
+  font: 500 18px/20px 'Inter';
+  color: #fff;
+  margin: 18px 0 0;
+}
+
+.about-me__title{
+  color: #fff;
+  font: 400 50px/58px 'Inter';
+  margin: 66px 0 0;
+  max-width: 600px;
+  letter-spacing: -0.04em;
+}
+
+@media screen and (max-width:769px) {
+  .about-me{
+    padding: 87px 50px 0;
+  }
+  .about-me__title{
+    font: 400 40px/40px 'Inter';
+  }
+  .about-me__summary{
+    font: 500 12px/18px 'Inter';
+    margin-top: 15px;
+  }
+  .about-me__description{
+    font: 400 12px/18px 'Inter';
+    margin-top: 20px;
+  }
+  .about-me__photo{
+    width: 255px;
+    height: 307px;
+  }
+}
+
+@media screen and (max-width:570px) {
+  .about-me{
+    padding: 70px 14px 0;
+    min-height: 1128px;
+    
+  }
+  .about-me__content{
+    gap:40px;
+    flex-wrap: wrap-reverse;
+  }
+  .about-me__photo{
+    width: 292px;
+    height: 352px;
+    margin: 59px 0 0;
+  }
+  .about-me__title{
+    font: 400 30px/1.21 'Inter';
+    margin: 0;
+  }
+  .about-me__description{
+    font: 400 11px/16px 'Inter';
+  }
+  .about-me__link{
+    margin: 40px 0 0;
+  }
+  
+}

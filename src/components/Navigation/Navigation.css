@@ -1,0 +1,127 @@
+@keyframes button-hovered {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.8;
+  }
+}
+
+@keyframes link-hovered {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+.navigation__button{
+  background-color: #3DDC84;
+  border-radius: 3px;
+  margin: 0;
+  width: 76px;
+  height: 32px;
+  border: 0px;
+  font: 500 12px/16px 'Inter';
+  cursor: pointer;
+}
+
+.navigation__button:hover {
+  cursor: pointer;
+  animation: button-hovered 0.2s linear forwards;
+}
+
+
+.navigation__link{
+  margin-right: 30px;
+  color: white;
+  text-decoration: none;
+  font: 500 12px/16px 'Inter';
+}
+
+.navigation__link:hover {
+  cursor: pointer;
+  animation: link-hovered 0.2s linear forwards;
+}
+
+.navigation__link_type_movies{
+  margin: 0;
+  font: 500 13px/18px 'Inter';
+}
+
+.navigation__navigation-panel{
+  display: flex;
+  list-style: none;
+  gap: 16px;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  left: calc(50% - 106px);
+  top:28px;
+}
+
+.navigation__profile-button{
+  color: #fff;
+  font: 500 14px/16px 'Inter';
+  height: 32px;
+  width: 100px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  border-radius: 50px;
+  border: 2px solid rgba(170, 170, 170, 0.2);
+}
+
+.navigation__profile-button:hover {
+  cursor: pointer;
+  animation: button-hovered 0.2s linear forwards;
+}
+
+.navigation__menu-button{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  gap: 7px;
+}
+
+.navigation__menu-button:hover {
+  cursor: pointer;
+  animation: button-hovered 0.2s linear forwards;
+}
+
+.navigation__menu-line{
+  width: 28px;
+  height: 3px;
+  background-color: #fff;
+}
+
+.navigation__icon{
+  width: 12px;
+  height: 14px;
+}
+
+@media screen and (max-width:570px) {
+  .navigation__button{
+    width: 54px;
+    height: 26px;
+    font: 500 10px/16px 'Inter';
+  }
+  .navigation__link{
+    font: 500 10px/16px 'Inter';
+    margin-right: 14px;
+  }
+  .navigation__menu-button{
+    width: 40px;
+    height: 43px;
+  }
+  .navigation__menu-line{
+    width: 22px;
+    height: 2.5px;
+  }
+}
