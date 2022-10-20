@@ -100,7 +100,7 @@ class MainApi {
   };
 }
 
-const mainApi = new MainApi('http://dlvov.nomorepartiesxyz.ru', {
+const mainApi = new MainApi('https://dlvov.nomorepartiesxyz.ru', {
   'Content-Type': 'application/json',
 });
 
