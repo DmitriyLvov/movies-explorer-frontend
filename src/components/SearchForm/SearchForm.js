@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import FilterCheckobox from '../FilterCheckbox/FilterCheckbox';
+import { SCREEN_MOBILE_MAX_WIDTH } from '../../constants/constants';
 import searchIcon from '../../images/icon-search.svg';
 import forwardIcon from '../../images/icon-forward.svg';
 import useMovieManipulations from '../../hooks/useMovieManipulations';
@@ -23,7 +24,7 @@ function SearchForm({ searchMovieHandler, screenWidth, type }) {
     <section className="search-form">
       <form className="search-form__search-field" onSubmit={searchMovieHandler}>
         <div className={inputClass}>
-          {screenWidth > 570 && (
+          {screenWidth > SCREEN_MOBILE_MAX_WIDTH && (
             <img
               className="search-form__search-icon"
               src={searchIcon}
@@ -42,7 +43,6 @@ function SearchForm({ searchMovieHandler, screenWidth, type }) {
               )
             }
             onBlur={() => setInputClass('search-form__input-wrapper')}
-            required
           />
           <button type="submit" className="search-from__button">
             <img

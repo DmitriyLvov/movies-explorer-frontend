@@ -11,6 +11,7 @@ function InputWithLabel({
   onChange,
   minLength,
   maxLength,
+  disabled,
 }) {
   const getMainClass = () => {
     if (view === 'profile') {
@@ -58,6 +59,7 @@ function InputWithLabel({
         onChange={onChange}
         minLength={minLength}
         maxLength={maxLength}
+        disabled={disabled}
       />
       <span className={getSpanErrorClass()}>{error ? error : ''}</span>
     </div>

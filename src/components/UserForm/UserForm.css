@@ -63,17 +63,25 @@
   font: 400 13px/1.21 'Inter';
 }
 
-.user-form__error{
+.user-form__message{
   width: 100%;
   text-align: center;
   font: 500 14px/1.21 'Inter';
-  color: #EE3465;
   position: absolute;
   top: 385px;
   left: 0;
 }
 
-.user-form__error_type_profile{
+.user-form__message_color_red{
+  color: #EE3465;
+}
+
+.user-form__message_color_white{
+  color: #fff;
+}
+
+
+.user-form__message_type_profile{
   position: absolute;
   left: calc(50% - 130px);
   top: 75%;
@@ -114,10 +122,10 @@
   .user-form__title_profile{
     margin: 0px 0 12px;
   }
-  .user-form__error{
+  .user-form__message{
     max-width: 250px;
     left: calc(50% - 125px);
-    top: 425px;
+    top: 75vh;
   }
 }
 

@@ -32,28 +32,10 @@ function Movies({
     }
   }, []);
 
-  const correctFindedMovie = (id, isLiked) => {
-    const index = findedMovies.findIndex((movie) => movie.id === id);
-    if (index > -1) {
-      const corMovies = [...findedMovies];
-      corMovies[index].isLiked = isLiked;
-      setFindedMovies(corMovies);
-    }
-  };
-
-  // Удаление лайка с найденных фильмов
-  const dislikeWithFindedMovie = (id) => {
-    correctFindedMovie(id, false);
-    dislikeMovie(id);
-  };
-
-  const likeWithFindedMovie = (card, previewPath) => {
-    correctFindedMovie(card.id, true);
-    likeMovie(card, previewPath);
-  };
-
   const searchMovieHandler = (e) => {
+    // Сбрасываем текст ошибки
     e.preventDefault();
+    setTextError('');
     const elements = e.target?.elements
       ? e.target.elements
       : e.target.form.elements;
@@ -64,6 +46,7 @@ function Movies({
       if (allMovies.length === 0) {
         getAllMovies()
           .then((res) => {
+            console.log(res);
             const { allMovies, savedMovies } = res;
             const searchResult = searchMovie(
               allMovies,
@@ -81,6 +64,7 @@ function Movies({
               searchText: movie.value,
               isShortMovies: isShortMovies.checked,
               findedMovies: searchResult,
+              movies: allMovies,
             });
           })
           .catch((e) => {
@@ -108,8 +92,11 @@ function Movies({
           searchText: movie.value,
           isShortMovies: isShortMovies.checked,
           findedMovies: searchResult,
+          movies: allMovies,
         });
       }
+    } else {
+      setTextError('Нужно ввести ключевое слово');
     }
   };
 
@@ -127,8 +114,8 @@ function Movies({
           type="movies"
           movies={findedMovies}
           screenWidth={screenWidth}
-          dislikeMovie={dislikeWithFindedMovie}
-          likeMovie={likeWithFindedMovie}
+          dislikeMovie={dislikeMovie}
+          likeMovie={likeMovie}
           textError={textError}
         />
       </main>

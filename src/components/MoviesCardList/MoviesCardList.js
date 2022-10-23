@@ -11,12 +11,12 @@ function MoviesCardList({
   textError,
 }) {
   const [currentQty, setCurrentQty] = useState(qty);
-  
+
   const moreHandler = () => {
     setCurrentQty(currentQty + qty);
   };
 
-  return movies.length > 0 ? (
+  return movies.length > 0 && textError === '' ? (
     <>
       <ul className="movies-card-list">
         {movies.map((movie, index) => {

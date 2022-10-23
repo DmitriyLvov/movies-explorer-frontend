@@ -13,6 +13,7 @@ function UserForm({
   mode,
   isValid,
   error,
+  info,
 }) {
   const navigate = useNavigate();
 
@@ -46,12 +47,21 @@ function UserForm({
     }
   };
 
-  const getErrorClass = () => {
+  const getMessageClass = () => {
+    let style;
+
     if (mode === 'profile') {
-      return 'user-form__error user-form__error_type_profile';
+      style = 'user-form__message user-form__message_type_profile';
     } else {
-      return 'user-form__error';
+      style = 'user-form__message';
     }
+    if (error) {
+      style += ' user-form__message_color_red';
+    }
+    if (info) {
+      style += ' user-form__message_color_white';
+    }
+    return style;
   };
 
   return (
@@ -69,7 +79,7 @@ function UserForm({
       >
         <h2 className={getTitleClass()}>{title}</h2>
         <div className={getInputFieldClass()}>{children}</div>
-        <span className={getErrorClass()}>{error}</span>
+        <span className={getMessageClass()}>{error ? error : info}</span>
         {isValid ? (
           <button type="submit" className={getButtonClass()}>
             {isLoading ? buttonTextOnLoading : buttonText}

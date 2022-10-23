@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import useMovieManipulations from '../../hooks/useMovieManipulations';
+import { SCREEN_MOBILE_MAX_WIDTH } from '../../constants/constants';
 import './FilterCheckbox.css';
 
 function FilterCheckobox({ screenWidth, searchMovieHandler }) {
@@ -22,7 +23,9 @@ function FilterCheckobox({ screenWidth, searchMovieHandler }) {
 
   return (
     <div className="filter-checkbox">
-      {screenWidth > 570 && <div className="filter-checkbox__vertical-line" />}
+      {screenWidth > SCREEN_MOBILE_MAX_WIDTH && (
+        <div className="filter-checkbox__vertical-line" />
+      )}
       {
         <input
           className="filter-checkbox__checkbox"

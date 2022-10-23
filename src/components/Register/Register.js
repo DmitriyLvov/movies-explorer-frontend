@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { isEmail } from 'validator';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 import UserForm from '../UserForm/UserForm';
 import mainApi from '../../utils/MainApi';
@@ -11,15 +12,29 @@ function Register() {
   const { setCurrentUser } = useContext(CurrentUserContext);
   const navigate = useNavigate();
   const [errorText, setErrorText] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const defaultValues = { name: '', email: '', password: '' };
-  const { formValues, handleChangeInput, errors, isValid, resetForm } =
-    useFormAndValidation(defaultValues, false);
+  const {
+    formValues,
+    handleChangeInput,
+    errors,
+    isValid,
+    setIsValid,
+    resetForm,
+  } = useFormAndValidation(defaultValues, false);
 
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(e);
     const { email, password, name } = formValues;
+    if (!isEmail(email)) {
+      return setErrorText(
+        'В поле E-mail содержится ошибка. Исправьте ее и попробуйте снова.',
+      );
+    }
+    setIsValid(false);
+    setIsLoading(true);
     mainApi
       .registerNewUser({
         email,
@@ -41,8 +56,10 @@ function Register() {
           );
         } else {
           setErrorText('Ошибка на сервере. Попробуйте позже.');
+          setIsValid(true);
         }
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -50,6 +67,8 @@ function Register() {
       <UserForm
         title="Добро пожаловать!"
         buttonText="Зарегистрироваться"
+        isLoading={isLoading}
+        buttonTextOnLoading="Регистрация..."
         mode="auth"
         onSubmit={onSubmit}
         isValid={isValid}
@@ -65,6 +84,7 @@ function Register() {
           error={errors.name}
           minLength="2"
           maxLength="30"
+          disabled={isLoading}
         />
         <InputWithLabel
           type="email"
@@ -74,6 +94,7 @@ function Register() {
           value={formValues.email}
           onChange={handleChangeInput}
           error={errors.email}
+          disabled={isLoading}
         />
         <InputWithLabel
           name="password"
@@ -83,6 +104,7 @@ function Register() {
           value={formValues.password}
           onChange={handleChangeInput}
           error={errors.password}
+          disabled={isLoading}
         />
       </UserForm>
       <p className="register__text">

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { SCREEN_TABLET_MAX_WIDTH } from '../../constants/constants';
 import accountIcon from '../../images/icon__account.svg';
 import NavigationPopup from '../NavigationPopup/NavigationPopup';
 import './Navigation.css';
@@ -23,7 +24,7 @@ function Navigation({ screenWidth }) {
     <>
       {currentUser?.email ? (
         <>
-          {screenWidth > 768 && (
+          {screenWidth > SCREEN_TABLET_MAX_WIDTH && (
             <nav className="navigation__links">
               <ul className="navigation__navigation-panel">
                 <Link
@@ -63,7 +64,7 @@ function Navigation({ screenWidth }) {
               </Link>
             </nav>
           )}
-          {screenWidth < 769 && (
+          {screenWidth <= SCREEN_TABLET_MAX_WIDTH && (
             <div className="navigation__menu-button" onClick={openNavPopup}>
               <div className="navigation__menu-line" />
               <div className="navigation__menu-line" />

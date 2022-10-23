@@ -4,6 +4,11 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import useMovieManipulations from '../../hooks/useMovieManipulations';
 import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
+import {
+  QTY_MOVIES_DESKTOP,
+  QTY_MOVIES_MOBILE,
+  SCREEN_MOBILE_MAX_WIDTH,
+} from '../../constants/constants';
 import Main from '../Main/Main';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
@@ -18,7 +23,6 @@ import './App.css';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
-  const [userReady, setUserReady] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [qtyMovies, setQtyMovies] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,28 +34,44 @@ function App() {
   const { getSearchDataFromLocalStore, saveSearchDataToLocalStore } =
     useMovieManipulations();
 
-  // Получение данных пользователя при загрузке
+  // Получение данных пользователя и фильмов из хранилища
   useEffect(() => {
+    const localData = getSearchDataFromLocalStore();
+    // Если есть данные фильмов
+    if (localData) {
+      setAllMovies(localData.movies);
+    }
+    setIsLoading(true);
+    // Запрос данных пользователя и сохраненных фильмов
     if (!currentUser?.email) {
-      setIsLoading(true);
       mainApi
         .getUserInfo()
-        .then((res) => {
-          const { name, email, _id } = res;
+        .then((userInfo) => {
+          const { name, email, _id } = userInfo;
           setCurrentUser({ name, email, _id });
         })
         .catch((e) => console.log(e))
         .finally(() => {
           setIsLoading(false);
-          setUserReady(true);
         });
     }
   }, []);
 
-  // Получение маскимального количества карточек на экрана
-  function getQtyMoviesByScreenWidth() {
-    setQtyMovies(window.innerWidth > 570 ? 7 : 5);
-  }
+  // Получаем сохраненные фильмы для пользователя
+  useEffect(() => {
+    if (currentUser?.email) {
+      setIsLoading(true);
+      mainApi
+        .getSavedMovies()
+        .then((movies) => {
+          setSavedMovies(movies);
+        })
+        .catch((e) => console.log(e))
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [currentUser]);
 
   // Контроль ширины экрана
   useEffect(() => {
@@ -64,60 +84,58 @@ function App() {
     };
   }, []);
 
+  // Получение маскимального количества карточек на экрана
+  function getQtyMoviesByScreenWidth() {
+    setQtyMovies(
+      window.innerWidth > SCREEN_MOBILE_MAX_WIDTH
+        ? QTY_MOVIES_DESKTOP
+        : QTY_MOVIES_MOBILE,
+    );
+  }
+
   function changeWindowSize() {
     setScreenWidth(window.innerWidth);
     getQtyMoviesByScreenWidth();
   }
 
-  // Получение сохраненных фильмов
-  const getSavedMovies = () => {
+  // Получение всех фильмов
+  const getAllMovies = () => {
+    // Если был произведен поиск и данные есть в Store
+    if (allMovies.length > 0) {
+      return { allMovies, savedMovies };
+    }
+    // Если коллекция всех фильмов пуста
     setIsLoading(true);
-    return mainApi
-      .getSavedMovies()
-      .then((res) => {
-        setSavedMovies(res);
-        return res;
+    // Если есть сохраненные данные, но не было первичного поиска
+    return moviesApi
+      .getMovies()
+      .then((allMovies) => {
+        setAllMovies(allMovies);
+        return { allMovies, savedMovies };
       })
-      .catch((er) => console.log(er))
+      .catch((e) =>
+        console.log(`При запросе к БД фильмов произошла ошибка: ${e.message}`),
+      )
       .finally(() => {
         setIsLoading(false);
       });
   };
 
-  // Получение всех фильмов
-  const getAllMovies = () => {
-    setIsLoading(true);
-    // Если был произведен поиск сохраненных фильмов
-    if (savedMovies.length > 0) {
-      return moviesApi
-        .getMovies()
-        .then((allMovies) => {
-          setAllMovies(allMovies);
-          return { allMovies, savedMovies };
-        })
-        .catch((er) =>
-          console.log('При частичном запросе произошла ошибка', er),
-        )
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
-    // Если не было поиска сохраненных фильмов
-    else {
-      return Promise.all([moviesApi.getMovies(), mainApi.getSavedMovies()])
-        .then(([allMovies, savedMovies]) => {
-          setSavedMovies(savedMovies);
-          setAllMovies(allMovies);
-          return { allMovies, savedMovies };
-        })
-        .catch((e) =>
-          console.log(
-            `При запросе к БД фильмов произошла ошибка: ${e.message}`,
-          ),
-        )
-        .finally(() => {
-          setIsLoading(false);
-        });
+  // Выход пользователя из сеанса
+  const logOut = () => {
+    localStorage.removeItem('SearchData');
+    setCurrentUser({});
+    localStorage.removeItem('jwt');
+    // Очищаем состояние для сохраненных фильмов
+    setSavedMovies([]);
+  };
+
+  const checkErrorHandler = (e) => {
+    if (e === 401) {
+      console.log('LogOut');
+      logOut();
+    } else {
+      console.log(e);
     }
   };
 
@@ -148,7 +166,6 @@ function App() {
           localData.findedMovies[movieIndex].isLiked = true;
         } else {
           localData.findedMovies[movieIndex].isLiked = false;
-          console.log('dislike');
         }
         saveSearchDataToLocalStore(localData);
       }
@@ -185,7 +202,7 @@ function App() {
       .then((movie) => {
         correctDataByLikes(true, movie, movie.movieId);
       })
-      .catch((er) => console.log(er))
+      .catch(checkErrorHandler)
       .finally(() => setIsLoading(false));
   };
 
@@ -196,7 +213,7 @@ function App() {
       .then(() => {
         correctDataByLikes(false, '', id);
       })
-      .catch((er) => console.log(er))
+      .catch(checkErrorHandler)
       .finally(() => setIsLoading(false));
   };
 
@@ -213,60 +230,62 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
-      {isLoading && <Preloader />}
       <div className="root">
-        <Routes>
-          <Route
-            path="/sign-in"
-            element={currentUser?.email ? <Navigate to="/" /> : <Login />}
-          />
-          <Route
-            path="/sign-up"
-            element={currentUser?.email ? <Navigate to="/" /> : <Register />}
-          />
-          {userReady && (
-            <>
-              <Route
-                exact
-                path="/movies"
-                element={
-                  <ProtectedRoute
-                    element={Movies}
-                    screenWidth={screenWidth}
-                    qty={qtyMovies}
-                    getAllMovies={getAllMovies}
-                    savedMovies={savedMovies}
-                    allMovies={allMovies}
-                    likeMovie={likeMovie}
-                    dislikeMovie={dislikeMovie}
-                  />
-                }
-              />
-              <Route
-                exact
-                path="/saved-movies"
-                element={
-                  <ProtectedRoute
-                    element={SavedMovies}
-                    screenWidth={screenWidth}
-                    qty={qtyMovies}
-                    getSavedMovies={getSavedMovies}
-                    savedMovies={savedMovies}
-                    likeMovie={likeMovie}
-                    dislikeMovie={dislikeWithConfirm}
-                  />
-                }
-              />
-              <Route
-                exact
-                path="/profile"
-                element={<ProtectedRoute element={Profile} />}
-              />
-            </>
-          )}
-          <Route exact path="/" element={<Main screenWidth={screenWidth} />} />
-          <Route path="*" element={<Page404 />} />
-        </Routes>
+        {isLoading ? (
+          <Preloader />
+        ) : (
+          <Routes>
+            <Route
+              path="/sign-in"
+              element={currentUser?.email ? <Navigate to="/" /> : <Login />}
+            />
+            <Route
+              path="/sign-up"
+              element={currentUser?.email ? <Navigate to="/" /> : <Register />}
+            />
+            <Route
+              exact
+              path="/movies"
+              element={
+                <ProtectedRoute
+                  element={Movies}
+                  screenWidth={screenWidth}
+                  qty={qtyMovies}
+                  getAllMovies={getAllMovies}
+                  savedMovies={savedMovies}
+                  allMovies={allMovies}
+                  likeMovie={likeMovie}
+                  dislikeMovie={dislikeMovie}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/saved-movies"
+              element={
+                <ProtectedRoute
+                  element={SavedMovies}
+                  screenWidth={screenWidth}
+                  qty={qtyMovies}
+                  savedMovies={savedMovies}
+                  likeMovie={likeMovie}
+                  dislikeMovie={dislikeWithConfirm}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/profile"
+              element={<ProtectedRoute element={Profile} logOut={logOut} />}
+            />
+            <Route
+              exact
+              path="/"
+              element={<Main screenWidth={screenWidth} />}
+            />
+            <Route path="*" element={<Page404 />} />
+          </Routes>
+        )}
         <PopupWithForm
           visible={confirmVisible}
           title="Вы хотите удалить фильм?"

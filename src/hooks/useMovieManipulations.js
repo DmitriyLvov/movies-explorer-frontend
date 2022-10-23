@@ -1,9 +1,12 @@
+import { SHORT_MOVIE_MAX_LENGTH } from '../constants/constants';
+
 function useMovieManipulations() {
   const saveSearchDataToLocalStore = (localData) => {
     const {
       searchText = '',
       isShortMovies = false,
       findedMovies = [],
+      movies = [],
     } = localData;
     localStorage.setItem(
       'SearchData',
@@ -11,6 +14,7 @@ function useMovieManipulations() {
         searchText,
         isShortMovies,
         findedMovies,
+        movies,
       }),
     );
   };
@@ -22,19 +26,13 @@ function useMovieManipulations() {
     const findedMovies = isShortMovies
       ? allMovies.filter(
           (movie) =>
-            (movie.nameRU.toLowerCase().includes(searchPhrase.toLowerCase()) ||
-              movie.description
-                .toLowerCase()
-                .includes(searchPhrase.toLowerCase())) &&
-            movie.duration < 41,
+            movie.nameRU.toLowerCase().includes(searchPhrase.toLowerCase()) &&
+            movie.duration <= SHORT_MOVIE_MAX_LENGTH,
         )
       : allMovies.filter(
           (movie) =>
-            (movie.nameRU.toLowerCase().includes(searchPhrase.toLowerCase()) ||
-              movie.description
-                .toLowerCase()
-                .includes(searchPhrase.toLowerCase())) &&
-            movie.duration > 40,
+            movie.nameRU.toLowerCase().includes(searchPhrase.toLowerCase()) &&
+            movie.duration > SHORT_MOVIE_MAX_LENGTH,
         );
     if (likedMovies) {
       findedMovies.forEach((movie) => {
