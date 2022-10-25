@@ -143,21 +143,19 @@ function App() {
   };
 
   const correctDataByLikes = (isLiked, movie, id) => {
-    if (savedMovies.length > 0) {
-      if (isLiked) {
-        // Добавляем при лайке
-        savedMovies.splice(0, 0, movie);
-      } else {
-        // Удаляем при дизлайке
-        const movieIndex = savedMovies.findIndex(
-          (movie) => movie.movieId === id,
-        );
-        // Если фильм найден в сохраненных
-        if (movieIndex > -1) {
-          savedMovies.splice(movieIndex, 1);
-        }
+    // Корректируем сохраненные фильмы
+    if (isLiked) {
+      // Добавляем при лайке
+      savedMovies.splice(0, 0, movie);
+    } else {
+      // Удаляем при дизлайке
+      const movieIndex = savedMovies.findIndex((movie) => movie.movieId === id);
+      // Если фильм найден в сохраненных
+      if (movieIndex > -1) {
+        savedMovies.splice(movieIndex, 1);
       }
     }
+
     // Если присутствуют данные в localStore
     const localData = getSearchDataFromLocalStore();
     if (localData?.findedMovies.length > 0) {
@@ -240,11 +238,23 @@ function App() {
           <Routes>
             <Route
               path="/sign-in"
-              element={currentUser?.email ? <Navigate to="/" /> : <Login setIsLogin={setIsLogin} />}
+              element={
+                currentUser?.email ? (
+                  <Navigate to="/" />
+                ) : (
+                  <Login setIsLogin={setIsLogin} />
+                )
+              }
             />
             <Route
               path="/sign-up"
-              element={currentUser?.email ? <Navigate to="/" /> : <Register setIsLogin={setIsLogin}/>}
+              element={
+                currentUser?.email ? (
+                  <Navigate to="/" />
+                ) : (
+                  <Register setIsLogin={setIsLogin} />
+                )
+              }
             />
             <Route
               exact

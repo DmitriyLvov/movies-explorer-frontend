@@ -46,7 +46,6 @@ function Movies({
       if (allMovies.length === 0) {
         getAllMovies()
           .then((res) => {
-            console.log(res);
             const { allMovies, savedMovies } = res;
             const searchResult = searchMovie(
               allMovies,

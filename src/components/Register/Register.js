@@ -25,7 +25,6 @@ function Register({ setIsLogin }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
     const { email, password, name } = formValues;
     setIsValid(false);
     setIsLoading(true);

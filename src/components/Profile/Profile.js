@@ -34,7 +34,6 @@ function Profile({ logOut }) {
         setInfoText('Данные пользователя обновлены');
       })
       .catch((e) => {
-        console.log(e);
         setErrorText(
           'Произошла ошибка при обновлении данных пользователя. Попробуйте позже',
         );
