@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { isEmail } from 'validator';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 import mainApi from '../../utils/MainApi';
 import Header from '../Header/Header';
@@ -21,21 +20,9 @@ function Profile({ logOut }) {
   // Сохранение данных пользователя
   const submitHandler = (e) => {
     e.preventDefault();
-    const { name, email } = formValues;
-    // Проверка на корректность E-Mail
-    if (!isEmail(email)) {
-      return setErrorText(
-        'В поле E-mail содержится ошибка. Исправьте ее и попробуйте снова.',
-      );
-    }
-    // Проверка на совпадение данных
-    if (currentUser.name === name && currentUser.email === email) {
-      return setErrorText(
-        'Вы ввели идентичные данные. Внесите изменения и попробуйте снова',
-      );
-    }
     setIsValid(false);
     setIsLoading(true);
+    const { name, email } = formValues;
     mainApi
       .changeUserInfo({ name, email })
       .then((res) => {
@@ -56,12 +43,11 @@ function Profile({ logOut }) {
   };
 
   const changeProfileInput = (e) => {
-    handleChangeInput(e);
     // Обновляем данные в сообщении
     setErrorText('');
     setInfoText('');
+    handleChangeInput(e);
   };
-
   return (
     <div className="profile">
       <Header type="movies" />

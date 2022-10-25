@@ -1,6 +1,5 @@
 import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { isEmail } from 'validator';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 import UserForm from '../UserForm/UserForm';
 import mainApi from '../../utils/MainApi';
@@ -8,7 +7,7 @@ import InputWithLabel from '../InputWithLabel/InputWithLabel';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './Register.css';
 
-function Register() {
+function Register({ setIsLogin }) {
   const { setCurrentUser } = useContext(CurrentUserContext);
   const navigate = useNavigate();
   const [errorText, setErrorText] = useState('');
@@ -28,11 +27,6 @@ function Register() {
     e.preventDefault();
     console.log(e);
     const { email, password, name } = formValues;
-    if (!isEmail(email)) {
-      return setErrorText(
-        'В поле E-mail содержится ошибка. Исправьте ее и попробуйте снова.',
-      );
-    }
     setIsValid(false);
     setIsLoading(true);
     mainApi
@@ -45,6 +39,7 @@ function Register() {
         const { email, name, _id, token } = res;
         localStorage.setItem('jwt', token);
         setCurrentUser({ email, name, _id });
+        setIsLogin(true);
         resetForm();
         navigate('/movies');
       })

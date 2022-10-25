@@ -16,7 +16,7 @@ function UserForm({
   info,
 }) {
   const navigate = useNavigate();
-
+  console.log(info);
   const getTitleClass = () => {
     if (mode === 'auth') {
       return 'user-form__title';

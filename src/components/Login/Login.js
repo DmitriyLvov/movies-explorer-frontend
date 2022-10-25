@@ -1,6 +1,5 @@
 import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { isEmail } from 'validator';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 import mainApi from '../../utils/MainApi';
 import UserForm from '../UserForm/UserForm';
@@ -8,7 +7,7 @@ import InputWithLabel from '../InputWithLabel/InputWithLabel';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './Login.css';
 
-function Login() {
+function Login({ setIsLogin }) {
   const navigate = useNavigate();
   const defaultValues = { password: '', email: '' };
   const {
@@ -28,11 +27,6 @@ function Login() {
   const onSubmit = (e) => {
     e.preventDefault();
     const { email, password } = formValues;
-    if (!isEmail(email)) {
-      return setErrorText(
-        'В поле E-mail содержится ошибка. Исправьте ее и попробуйте снова.',
-      );
-    }
     setIsValid(false);
     setIsLoading(true);
     mainApi
@@ -41,11 +35,11 @@ function Login() {
         const { token, name, email, _id } = res;
         localStorage.setItem('jwt', token);
         setCurrentUser({ email, name, _id });
+        setIsLogin(true);
         resetForm();
         navigate('/movies');
       })
       .catch((err) => {
-        console.log(err);
         if (err === 401) {
           setErrorText(
             'Пользователь не найден. Вероятно, вы ввели неправильное имя и/или пароль.',

@@ -23,6 +23,7 @@ import './App.css';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
+  const [isLogin, setIsLogin] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [qtyMovies, setQtyMovies] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -49,6 +50,7 @@ function App() {
         .then((userInfo) => {
           const { name, email, _id } = userInfo;
           setCurrentUser({ name, email, _id });
+          setIsLogin(true);
         })
         .catch((e) => console.log(e))
         .finally(() => {
@@ -59,7 +61,7 @@ function App() {
 
   // Получаем сохраненные фильмы для пользователя
   useEffect(() => {
-    if (currentUser?.email) {
+    if (isLogin) {
       setIsLoading(true);
       mainApi
         .getSavedMovies()
@@ -71,7 +73,7 @@ function App() {
           setIsLoading(false);
         });
     }
-  }, [currentUser]);
+  }, [isLogin]);
 
   // Контроль ширины экрана
   useEffect(() => {
@@ -128,6 +130,7 @@ function App() {
     localStorage.removeItem('jwt');
     // Очищаем состояние для сохраненных фильмов
     setSavedMovies([]);
+    setIsLogin(false);
   };
 
   const checkErrorHandler = (e) => {
@@ -237,11 +240,11 @@ function App() {
           <Routes>
             <Route
               path="/sign-in"
-              element={currentUser?.email ? <Navigate to="/" /> : <Login />}
+              element={currentUser?.email ? <Navigate to="/" /> : <Login setIsLogin={setIsLogin} />}
             />
             <Route
               path="/sign-up"
-              element={currentUser?.email ? <Navigate to="/" /> : <Register />}
+              element={currentUser?.email ? <Navigate to="/" /> : <Register setIsLogin={setIsLogin}/>}
             />
             <Route
               exact
