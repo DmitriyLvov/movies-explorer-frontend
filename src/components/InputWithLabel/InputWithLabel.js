@@ -8,6 +8,10 @@ function InputWithLabel({
   view,
   value,
   required = false,
+  onChange,
+  minLength,
+  maxLength,
+  disabled,
 }) {
   const getMainClass = () => {
     if (view === 'profile') {
@@ -33,28 +37,31 @@ function InputWithLabel({
     }
   };
 
+  const getSpanErrorClass = () => {
+    if (view === 'profile') {
+      return 'input-with-label__error input-with-label__error_type_profile';
+    } else {
+      return 'input-with-label__error';
+    }
+  };
+
   return (
     <div className={getMainClass()}>
       <label htmlFor={name} className={getLabelClass()}>
         {title}
       </label>
-      {required ? (
-        <input
-          type={type}
-          name={name}
-          className={getInputClass()}
-          defaultValue={value}
-          required
-        />
-      ) : (
-        <input
-          type={type}
-          name={name}
-          className={getInputClass()}
-          defaultValue={value}
-        />
-      )}
-      <span className="input-with-label__error">{error}</span>
+      <input
+        type={type}
+        name={name}
+        className={getInputClass()}
+        value={value}
+        required={required}
+        onChange={onChange}
+        minLength={minLength}
+        maxLength={maxLength}
+        disabled={disabled}
+      />
+      <span className={getSpanErrorClass()}>{error ? error : ''}</span>
     </div>
   );
 }

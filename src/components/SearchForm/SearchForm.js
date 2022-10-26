@@ -1,29 +1,30 @@
 import { useEffect, useState } from 'react';
 import FilterCheckobox from '../FilterCheckbox/FilterCheckbox';
+import { SCREEN_MOBILE_MAX_WIDTH } from '../../constants/constants';
 import searchIcon from '../../images/icon-search.svg';
 import forwardIcon from '../../images/icon-forward.svg';
+import useMovieManipulations from '../../hooks/useMovieManipulations';
 import './SearchForm.css';
 
-function SearchForm() {
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  const [inputClass, setInputClass] = useState('search-form__input-wrapper');
-
+function SearchForm({ searchMovieHandler, screenWidth, type }) {
+  const [inputText, setInputText] = useState('');
+  const { getSearchDataFromLocalStore } = useMovieManipulations();
   useEffect(() => {
-    window.addEventListener('resize', changeWindowSize);
-    return () => {
-      window.removeEventListener('resize', changeWindowSize);
-    };
+    if (type === 'movies') {
+      const localData = getSearchDataFromLocalStore();
+      if (localData) {
+        setInputText(localData.searchText);
+      }
+    }
   }, []);
 
-  function changeWindowSize() {
-    setScreenWidth(window.innerWidth);
-  }
+  const [inputClass, setInputClass] = useState('search-form__input-wrapper');
 
   return (
     <section className="search-form">
-      <form className="search-form__search-field">
+      <form className="search-form__search-field" onSubmit={searchMovieHandler}>
         <div className={inputClass}>
-          {screenWidth > 570 && (
+          {screenWidth > SCREEN_MOBILE_MAX_WIDTH && (
             <img
               className="search-form__search-icon"
               src={searchIcon}
@@ -32,15 +33,16 @@ function SearchForm() {
           )}
           <input
             type="text"
+            name="movie"
             placeholder="Фильм"
             className="search-form__input"
+            defaultValue={inputText}
             onFocus={() =>
               setInputClass(
                 'search-form__input-wrapper search-form__input-wrapper_actived',
               )
             }
             onBlur={() => setInputClass('search-form__input-wrapper')}
-            required
           />
           <button type="submit" className="search-from__button">
             <img
@@ -50,7 +52,10 @@ function SearchForm() {
             />
           </button>
         </div>
-        <FilterCheckobox />
+        <FilterCheckobox
+          screenWidth={screenWidth}
+          searchMovieHandler={searchMovieHandler}
+        />
       </form>
     </section>
   );

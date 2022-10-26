@@ -5,3 +5,7 @@
 Для запуска проекта локально используйте команду "npm start".
 
 [Ссылка на макет](https://disk.yandex.ru/d/hKTP-9ef7fj9tA)
+
+[Ссылка на сайт](https://ya-movies-explorer.nomoredomains.icu/)
+
+[Ссылка на Pull-request](https://github.com/DmitriyLvov/movies-explorer-frontend/pull/2)

@@ -22,7 +22,7 @@
   height: 122px;
   object-fit: cover;
   background-position: center;
-  
+  cursor: pointer;
 }
 
 .movie-card__description{

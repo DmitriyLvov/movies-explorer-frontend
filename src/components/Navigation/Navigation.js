@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { SCREEN_TABLET_MAX_WIDTH } from '../../constants/constants';
 import accountIcon from '../../images/icon__account.svg';
 import NavigationPopup from '../NavigationPopup/NavigationPopup';
 import './Navigation.css';
 
-function Navigation({ type }) {
-  // const location = useLocation();
-  // console.log(location);
+function Navigation({ screenWidth }) {
+  const { pathname } = useLocation();
 
   const [navPopupVisible, setNavPopupVisible] = useState(false);
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
-  useEffect(() => {
-    window.addEventListener('resize', changeWindowSize);
-    return () => {
-      window.removeEventListener('resize', changeWindowSize);
-    };
-  }, []);
+  const { currentUser } = useContext(CurrentUserContext);
 
   const closeNavPopup = () => {
     setNavPopupVisible(false);
@@ -25,33 +20,23 @@ function Navigation({ type }) {
   const openNavPopup = () => {
     setNavPopupVisible(true);
   };
-
-  function changeWindowSize() {
-    setScreenWidth(window.innerWidth);
-  }
-
   return (
     <>
-      {type === 'main' && (
-        <div>
-          <Link to="/sign-up" className="navigation__link">
-            Регистрация
-          </Link>
-          <Link to="/sign-in">
-            <button className="navigation__button">Войти</button>
-          </Link>
-        </div>
-      )}
-      {type === 'movies' && (
+      {currentUser?.email ? (
         <>
-          {screenWidth > 768 && (
+          {screenWidth > SCREEN_TABLET_MAX_WIDTH && (
             <nav className="navigation__links">
               <ul className="navigation__navigation-panel">
                 <Link
                   to="/movies"
                   className="navigation__link navigation__link_type_movies"
                 >
-                  <li className="navigation__link navigation__link_type_movies">
+                  <li
+                    className={`navigation__link navigation__link_type_movies ${
+                      pathname === '/movies' &&
+                      'navigation__link_type_movies_actived'
+                    }`}
+                  >
                     Фильмы
                   </li>
                 </Link>
@@ -59,7 +44,12 @@ function Navigation({ type }) {
                   to="/saved-movies"
                   className="navigation__link navigation__link_type_movies"
                 >
-                  <li className="navigation__link navigation__link_type_movies">
+                  <li
+                    className={`navigation__link navigation__link_type_movies ${
+                      pathname === '/saved-movies' &&
+                      'navigation__link_type_movies_actived'
+                    }`}
+                  >
                     Сохраненные фильмы
                   </li>
                 </Link>
@@ -74,7 +64,7 @@ function Navigation({ type }) {
               </Link>
             </nav>
           )}
-          {screenWidth < 769 && (
+          {screenWidth <= SCREEN_TABLET_MAX_WIDTH && (
             <div className="navigation__menu-button" onClick={openNavPopup}>
               <div className="navigation__menu-line" />
               <div className="navigation__menu-line" />
@@ -85,6 +75,15 @@ function Navigation({ type }) {
             <NavigationPopup closeNavPopupHandler={closeNavPopup} />
           )}
         </>
+      ) : (
+        <div>
+          <Link to="/sign-up" className="navigation__link">
+            Регистрация
+          </Link>
+          <Link to="/sign-in">
+            <button className="navigation__button">Войти</button>
+          </Link>
+        </div>
       )}
     </>
   );

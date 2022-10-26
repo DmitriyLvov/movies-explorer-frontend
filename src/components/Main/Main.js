@@ -8,14 +8,13 @@ import AboutMe from './AboutMe/AboutMe';
 import Footer from '../Footer/Footer';
 import './Main.css';
 
-function Main() {
+function Main({ screenWidth }) {
   return (
     <>
-      <Header type="main" />
+      <Header type="main" screenWidth={screenWidth} />
       <main>
         <Promo />
         <NavTab />
-
         <AboutProject />
         <Techs />
         <AboutMe />
