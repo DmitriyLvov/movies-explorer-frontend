@@ -61,6 +61,7 @@ export function useFormAndValidation(defaultValues, defaultIsValid) {
       setErrors(newErrors);
       setIsValid(defaultIsValid);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [setFormValues, setErrors, setIsValid],
   );
 

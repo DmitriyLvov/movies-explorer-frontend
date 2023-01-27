@@ -14,6 +14,7 @@ function FilterCheckobox({ screenWidth, searchMovieHandler }) {
     if (localData) {
       setChecked(localData.isShortMovies);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const changeStateHandle = (e) => {

@@ -19,19 +19,19 @@ function MoviesCardList({
   return movies.length > 0 && textError === '' ? (
     <>
       <ul className="movies-card-list">
-        {movies.map((movie, index) => {
-          if (index < currentQty) {
-            return (
-              <MoviesCard
-                key={type === 'movies' ? movie.id : movie._id}
-                card={movie}
-                type={type}
-                dislikeMovie={dislikeMovie}
-                likeMovie={likeMovie}
-              />
-            );
-          }
-        })}
+        {movies.map((movie, index) =>
+          index < currentQty ? (
+            <MoviesCard
+              key={type === 'movies' ? movie.id : movie._id}
+              card={movie}
+              type={type}
+              dislikeMovie={dislikeMovie}
+              likeMovie={likeMovie}
+            />
+          ) : (
+            <></>
+          ),
+        )}
       </ul>
       {movies.length > currentQty && (
         <button

@@ -30,6 +30,7 @@ function Movies({
     if (localData) {
       setFindedMovies(localData.findedMovies);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const searchMovieHandler = (e) => {

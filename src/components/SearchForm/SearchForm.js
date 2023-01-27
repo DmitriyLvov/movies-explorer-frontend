@@ -16,6 +16,7 @@ function SearchForm({ searchMovieHandler, screenWidth, type }) {
         setInputText(localData.searchText);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [inputClass, setInputClass] = useState('search-form__input-wrapper');
