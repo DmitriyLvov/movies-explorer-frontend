@@ -84,6 +84,7 @@ function App() {
     return () => {
       window.removeEventListener('resize', changeWindowSize);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Получение маскимального количества карточек на экрана

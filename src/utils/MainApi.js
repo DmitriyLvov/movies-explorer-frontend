@@ -64,7 +64,7 @@ class MainApi {
 
   // Получение сохраненных фильмов
   getSavedMovies = () => {
-    return fetch(`${this._baseURL}/movies`, {
+    return fetch(`${this._baseURL}/movies/movies`, {
       method: 'GET',
       headers: {
         ...this._headers,
@@ -76,7 +76,7 @@ class MainApi {
 
   // Добавление фильма в избранное
   likeMovie = (movie) => {
-    return fetch(`${this._baseURL}/movies`, {
+    return fetch(`${this._baseURL}/movies/movies`, {
       method: 'POST',
       headers: {
         ...this._headers,
@@ -89,7 +89,7 @@ class MainApi {
 
   // Удаление фильма из избранного
   dislikeMovie = (_id) => {
-    return fetch(`${this._baseURL}/movies/${_id}`, {
+    return fetch(`${this._baseURL}/movies/movies/${_id}`, {
       method: 'DELETE',
       headers: {
         ...this._headers,
@@ -100,12 +100,8 @@ class MainApi {
   };
 }
 
-const mainApi = new MainApi('https://dlvov.nomorepartiesxyz.ru', {
+const mainApi = new MainApi(`${process.env.REACT_APP_SERVER_URL}`, {
   'Content-Type': 'application/json',
 });
-
-// const mainApi = new MainApi('http://localhost:5000', {
-//   'Content-Type': 'application/json',
-// });
 
 export default mainApi;
