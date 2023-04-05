@@ -32,7 +32,8 @@ function Login({ setIsLogin }) {
     mainApi
       .login({ email, password })
       .then((res) => {
-        const { token, name, email, _id } = res;
+        const { token, user } = res;
+        const { email, name, _id } = user;
         localStorage.setItem('jwt', token);
         setCurrentUser({ email, name, _id });
         setIsLogin(true);

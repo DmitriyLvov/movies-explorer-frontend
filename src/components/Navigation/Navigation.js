@@ -12,6 +12,7 @@ function Navigation({ screenWidth }) {
   const [navPopupVisible, setNavPopupVisible] = useState(false);
 
   const { currentUser } = useContext(CurrentUserContext);
+  console.log(currentUser);
 
   const closeNavPopup = () => {
     setNavPopupVisible(false);

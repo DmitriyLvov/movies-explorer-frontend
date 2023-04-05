@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import useMovieManipulations from '../../hooks/useMovieManipulations';
@@ -22,7 +22,6 @@ import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import './App.css';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({});
   const [isLogin, setIsLogin] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [qtyMovies, setQtyMovies] = useState(0);
@@ -31,6 +30,8 @@ function App() {
   const [allMovies, setAllMovies] = useState([]);
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [deleteId, setDeleteId] = useState(0);
+
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
   const { getSearchDataFromLocalStore, saveSearchDataToLocalStore } =
     useMovieManipulations();
@@ -57,7 +58,7 @@ function App() {
           setIsLoading(false);
         });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Получаем сохраненные фильмы для пользователя
@@ -85,7 +86,7 @@ function App() {
     return () => {
       window.removeEventListener('resize', changeWindowSize);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Получение маскимального количества карточек на экрана
@@ -232,84 +233,78 @@ function App() {
   };
 
   return (
-    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
-      <div className="root">
-        {isLoading ? (
-          <Preloader />
-        ) : (
-          <Routes>
-            <Route
-              path="/sign-in"
-              element={
-                currentUser?.email ? (
-                  <Navigate to="/" />
-                ) : (
-                  <Login setIsLogin={setIsLogin} />
-                )
-              }
-            />
-            <Route
-              path="/sign-up"
-              element={
-                currentUser?.email ? (
-                  <Navigate to="/" />
-                ) : (
-                  <Register setIsLogin={setIsLogin} />
-                )
-              }
-            />
-            <Route
-              exact
-              path="/movies"
-              element={
-                <ProtectedRoute
-                  element={Movies}
-                  screenWidth={screenWidth}
-                  qty={qtyMovies}
-                  getAllMovies={getAllMovies}
-                  savedMovies={savedMovies}
-                  allMovies={allMovies}
-                  likeMovie={likeMovie}
-                  dislikeMovie={dislikeMovie}
-                />
-              }
-            />
-            <Route
-              exact
-              path="/saved-movies"
-              element={
-                <ProtectedRoute
-                  element={SavedMovies}
-                  screenWidth={screenWidth}
-                  qty={qtyMovies}
-                  savedMovies={savedMovies}
-                  likeMovie={likeMovie}
-                  dislikeMovie={dislikeWithConfirm}
-                />
-              }
-            />
-            <Route
-              exact
-              path="/profile"
-              element={<ProtectedRoute element={Profile} logOut={logOut} />}
-            />
-            <Route
-              exact
-              path="/"
-              element={<Main screenWidth={screenWidth} />}
-            />
-            <Route path="*" element={<Page404 />} />
-          </Routes>
-        )}
-        <PopupWithForm
-          visible={confirmVisible}
-          title="Вы хотите удалить фильм?"
-          buttonText="Да"
-          onClose={() => setConfirmVisible(false)}
-          onSubmit={popupDislike}
-        />
-      </div>
-    </CurrentUserContext.Provider>
+    <div className="root">
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <Routes>
+          <Route
+            path="/sign-in"
+            element={
+              currentUser?.email ? (
+                <Navigate to="/" />
+              ) : (
+                <Login setIsLogin={setIsLogin} />
+              )
+            }
+          />
+          <Route
+            path="/sign-up"
+            element={
+              currentUser?.email ? (
+                <Navigate to="/" />
+              ) : (
+                <Register setIsLogin={setIsLogin} />
+              )
+            }
+          />
+          <Route
+            exact
+            path="/movies"
+            element={
+              <ProtectedRoute
+                element={Movies}
+                screenWidth={screenWidth}
+                qty={qtyMovies}
+                getAllMovies={getAllMovies}
+                savedMovies={savedMovies}
+                allMovies={allMovies}
+                likeMovie={likeMovie}
+                dislikeMovie={dislikeMovie}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/saved-movies"
+            element={
+              <ProtectedRoute
+                element={SavedMovies}
+                screenWidth={screenWidth}
+                qty={qtyMovies}
+                savedMovies={savedMovies}
+                likeMovie={likeMovie}
+                dislikeMovie={dislikeWithConfirm}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/profile"
+            element={<ProtectedRoute element={Profile} logOut={logOut} />}
+          />
+          <Route exact path="/" element={<Main screenWidth={screenWidth} />} />
+          <Route path="*" element={<Page404 />} />
+        </Routes>
+      )}
+      <PopupWithForm
+        visible={confirmVisible}
+        title="Вы хотите удалить фильм?"
+        buttonText="Да"
+        onClose={() => setConfirmVisible(false)}
+        onSubmit={popupDislike}
+      />
+    </div>
   );
 }
 

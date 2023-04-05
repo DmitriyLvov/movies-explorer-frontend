@@ -5,4 +5,4 @@
 Для запуска проекта локально используйте команду "npm start".
 
 [Ссылка на макет](https://disk.yandex.ru/d/hKTP-9ef7fj9tA)
-[Ссылка на gh-pages]()
+[Ссылка на demo](https://movies-explorer-frontend-gamma.vercel.app/)
